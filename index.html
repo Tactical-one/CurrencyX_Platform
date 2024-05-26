@@ -24,8 +24,8 @@
 
 </head>
 <body>
-      <!-- Header Start -->
-      <div class="container-fluid">
+       <!-- Header Start -->
+    <div class="container-fluid">
         <div class="row">
             <div class="col-lg-3 bg-secondary d-none d-lg-block">
                 <a href="index.html" class="navbar-brand w-100 h-100 m-0 p-0 d-flex align-items-center justify-content-center">
@@ -46,16 +46,14 @@
                     </div>
                     <div class="col-lg-5 text-right">
                         <div class="d-inline-flex align-items-center p-2">
-                            
                             <a class="btn btn-sm btn-outline-primary btn-sm-square mr-2" href="">
                                 <i class="fab fa-twitter"></i>
                             </a>
                             <a class="btn btn-sm btn-outline-primary btn-sm-square mr-2" href="">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
-                            
                             <a class="btn btn-sm btn-outline-primary btn-sm-square mr-2" href="">
-                                <i class="fab fa-youtube"></i>
+                                <i class="fab fa-facebook"></i>
                             </a>
                         </div>
                     </div>
@@ -82,51 +80,64 @@
     </div>
     <!-- Header End -->
 
-    <!-- Main banner Start -->
-    <div class="section bg-theme-color-light overlay-dark overlay-opacity-8 bg-cover lazy" data-loaded="true" style="background-image: url(https://bootdey.com/img/Content/bg1.jpg);">
-    			
+     <!-- Main banner Start -->
+     <div class="section bg-theme-color-light overlay-dark overlay-opacity-8 bg-cover lazy" data-loaded="true" style="background-image: url(https://bootdey.com/img/Content/bg1.jpg);">
         <div class="container"> 
-
             <div class="row text-center-md text-center-xs d-middle justify-content-start">
-                
                 <div class="col-12 col-lg-6 mb-5 text-white aos-init aos-animate" data-aos="fade-in" data-aos-delay="0" data-aos-offset="0">
-
                     <!-- main title -->
                     <h1 class="display-4 fw-bold mb-0">
                         <span class="d-inline-block">
-
                             <span class="h6 fw-normal d-block text-align-end text-center-xs">
                                 Simple, Fast and Free
                             </span>
-
                             <span class="text-danger">Currency</span> Xchange
                         </span>
                     </h1>
-                    
                     <!-- slogan -->
                     <p class="h3 fw-normal mb-0">
                         Your conversion, one click away
                     </p>
-
                 </div>
-
                 <div class="col-12 col-lg-6 text-align-end text-center-md text-center-xs aos-init aos-animate" data-aos="fade-in" data-aos-delay="50" data-aos-offset="0">
+                    <div class="d-inline-block bg-white shadow-primary-xs rounded p-4 w-100 max-w-450 text-align-start">
 
-                    <div class="d-inline-block bg-white shadow-primary-xs rounded p-4 p-md-5 w-100 max-w-450 text-align-start">
-                        
-                        <h2 class="h5 mb-5">
-                            <i class="fi fi-homeadvisor"></i> 
-                            <span class="d-inline-block px-2">Currency Search</span>
-                        </h2>
-
+                        <div class="exchange-container">
+                            <div class="exchange-header">
+                                <div class="exchange-tab active">Exchange Crypto</div>
+                                <div class="exchange-tab">Buy / Sell Crypto <i class="fas fa-flag"></i></div>
+                            </div>
+                            <div class="exchange-body">
+                                <div class="exchange-input">
+                                    <label for="send-amount">You Send</label>
+                                    <div class="input-container">
+                                        <input type="number" id="send-amount" value="0.01">
+                                        <select id="send-currency">
+                                            <option value="BTC">BTC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="exchange-info">
+                                    <p><i class="fas fa-info-circle"></i> No hidden fees</p>
+                                    <p><i class="fas fa-sync-alt"></i> Estimated rate: 1 BTC ~ 18.17016 ETH <i class="fas fa-exchange-alt"></i></p>
+                                </div>
+                                <div class="exchange-output">
+                                    <label for="receive-amount">You Get</label>
+                                    <div class="input-container">
+                                        <input type="text" id="receive-amount" value="0.1817016" readonly>
+                                        <select id="receive-currency">
+                                            <option value="ETH">ETH</option>
+                                        </select>
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                </div>
+                                <button class="exchange-button">Exchange</button>
+                            </div>
+                        </div>
                     </div>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
     <!-- Main banner End -->
 
@@ -156,7 +167,7 @@
                     <div class="col-lg-3 col-md-6 col-sm-6">
                         <div class="counter__item third__item">
                             <div class="counter__item__text">
-                               <i class="icon fas fa-chalkboard-teacher fa-3x"></i>
+                                <i class="icon fas fa-chalkboard-teacher fa-3x"></i>
                                 <h2 class="counter_num">230</h2>
                                 <p>Perspective clients</p>
                             </div>

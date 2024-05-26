@@ -59,7 +59,8 @@ opacity-8, .overlay-opacity-8:after {
     z-index: 1;
 }
 
-/* Counter */
+        /****** Counter ******/
+
 .counter {
     background: #100028;
     height: 550px;
@@ -148,3 +149,118 @@ opacity-8, .overlay-opacity-8:after {
   .counter__item__text .icon{
   color:#00FFFF;    
   }
+
+  /********** End Counter **********/
+
+/* Exchange Container Styles */
+.exchange-container {
+    margin-top: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.exchange-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+}
+
+.exchange-header {
+    display: flex;
+    justify-content: space-between;
+    background-color: #007bff;
+    padding: 10px;
+    border-bottom: 2px solid #0056b3;
+    border-radius: 12px 12px 0 0;
+}
+
+.exchange-tab {
+    cursor: pointer;
+    padding: 10px 20px;
+    flex: 1;
+    text-align: center;
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.exchange-tab:hover {
+    background-color: #0056b3;
+}
+
+.exchange-tab.active {
+    background-color: #0056b3;
+    font-weight: bold;
+}
+
+.exchange-body {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.exchange-input, .exchange-output {
+    margin-bottom: 20px;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f1f3f5;
+    transition: border-color 0.3s ease;
+}
+
+.input-container:hover {
+    border-color: #007bff;
+}
+
+.input-container input, .input-container select {
+    flex: 1;
+    margin-right: 10px;
+    border: none;
+    background: transparent;
+    outline: none;
+}
+
+.exchange-info {
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.exchange-info p {
+    display: flex;
+    align-items: center;
+}
+
+.exchange-info i {
+    margin-right: 8px;
+}
+
+.exchange-button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.exchange-button:hover {
+    background-color: #0056b3;
+}
+
+.exchange-button:active {
+    background-color: #004085;
+}
+
+.exchange-output .fas.fa-lock {
+    color: #007bff;
+    margin-left: 10px;
+}
