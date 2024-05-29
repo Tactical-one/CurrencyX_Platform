@@ -1,74 +1,54 @@
-/**
- * Fetches IP details from the API and updates the HTML elements with the retrieved data.
- */
-async function fetchIPDetails() {
-    const apiUrl = 'https://api.myip.com';
-    const ipElement = document.getElementById('ip');
-    const countryElement = document.getElementById('country');
-    const ccElement = document.getElementById('cc');
+// Function to access the currency API
+async function fetchCurrencyData(sendCurrency) {
+    const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${sendCurrency}.json`;
 
     try {
-        const response = await fetch(apiUrl);
-
+        const response = await fetch(url);
         if (!response.ok) {
-            throw new Error(`Network response was not ok: ${response.statusText}`);
+            throw new Error('Network response was not ok');
         }
-
-        const data = await response.json();
-
-        ipElement.textContent = data.ip;
-        countryElement.textContent = `${data.country}`;
-        ccElement.textContent = data.cc;
+        return await response.json();
     } catch (error) {
-        console.error('Error fetching IP details:', error);
-        ipElement.textContent = `Error: ${error.message}`;
-        countryElement.textContent = 'Error';
-        ccElement.textContent = '';
+        throw new Error('Failed to fetch currency data');
     }
 }
 
-window.addEventListener('load', fetchIPDetails);
+// Function to convert user-selected currencies to lowercase
+function convertToLowerCase(currency) {
+    return currency.toLowerCase();
+}
 
+document.getElementById("currency-form").addEventListener("submit", async function(event) {
+    event.preventDefault();
+    const sendAmount = parseFloat(document.getElementById("send-amount").value);
+    // Convert user-selected currencies to lowercase
+    const sendCurrency = convertToLowerCase(document.getElementById("send-currency").value);
+    const receiveCurrency = convertToLowerCase(document.getElementById("receive-currency").value);
 
+    try {
+        const data = await fetchCurrencyData(sendCurrency);
 
-/**
- * Fetches currency conversion details from the API and updates the HTML elements with the retrieved data.
- */
-function executeConversion() {
-    const sendAmount = document.getElementById('send-amount').value;
-    const sendCurrency = document.getElementById('send-currency').value;
-    const receiveCurrency = document.getElementById('receive-currency').value;
+        // Check if receiveCurrency exists in the response
+        if (receiveCurrency in data) {
+            // Extract conversion rate for the receive currency
+            const receiveCurrencyRate = data[receiveCurrency];
+            console.log('Receive Currency Rate:', receiveCurrencyRate);
 
-    if (sendAmount === "" || isNaN(sendAmount)) {
-        alert("Please enter a valid amount to send.");
-        return;
-    }
+            // Calculate the received amount
+            const receivedAmount = sendAmount * receiveCurrencyRate;
 
-    const endpoint = 'convert';
-    const access_key = '1d46c82454c45074f6bc05d5b57e78fa';
+            // Log receivedAmount to console
+            console.log('Received Amount:', receivedAmount);
 
-    const from = sendCurrency;
-    const to = receiveCurrency;
-    const amount = sendAmount;
-
-    $.ajax({
-        url: `http://api.exchangerate.host/${endpoint}?access_key=${access_key}&from=${from}&to=${to}&amount=${amount}`,
-        dataType: 'jsonp',
-        success: function(json) {
-            if (!json.result) {
-                alert("Failed to get a valid response from the exchange rate service.");
-                return;
-            }
-            const receivedAmount = json.result.toFixed(2);
-            const rate = json.info.rate;
-            const timestamp = new Date(json.info.timestamp * 1000).toLocaleTimeString();
-
-            $('#result').val(receivedAmount);
-            $('#result1').text(rate);
-            $('#time').text(timestamp);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-            alert(`An error occurred while fetching exchange rate data: ${textStatus}, ${errorThrown}`);
+            // Display the result in the receive-amount input
+            document.getElementById("result").value = receivedAmount.toFixed(2);
+        } else {
+            throw new Error('Receive currency not found in response');
         }
-    });
-}
+
+    } catch (error) {
+        console.error(error);
+        // Handle the error
+        alert("Failed to perform currency conversion. Please try again later.");
+    }
+});
