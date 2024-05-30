@@ -23,10 +23,7 @@ async function fetchCurrencyData(sendCurrency) {
     }
   }
   
-  // Function to convert currencies to lowercase
-  function convertToLowerCase(currency) {
-    return currency.toLowerCase();
-  }
+
   
   // Event listener for the currency conversion form submission
     document.getElementById("currency-form").addEventListener("submit", async function(event) {
@@ -38,8 +35,7 @@ async function fetchCurrencyData(sendCurrency) {
     try {
       const data = await fetchCurrencyData(sendCurrency);
   
-      // Access the conversion rate for the receive currency directly
-      const receiveCurrencyRate = (data[sendCurrency][receiveCurrency]);
+ 
   
       // Validate the conversion rate
       if (typeof receiveCurrencyRate !== 'number' || isNaN(receiveCurrencyRate)) {
