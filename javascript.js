@@ -1,54 +1,58 @@
-// Function to access the currency API
+/**
+ * Fetches currency data from the API
+ * @param {string} sendCurrency - The currency to fetch data for
+ * @returns {Promise<object>} - The fetched currency data
+ */
 async function fetchCurrencyData(sendCurrency) {
     const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${sendCurrency}.json`;
-
+  
     try {
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return await response.json();
+      // Fetch the currency data from the API
+      const response = await fetch(url);
+      if (!response.ok) {
+        // Throw an error if the response is not OK
+        throw new Error('Network response was not ok');
+      }
+      // Parse the response as JSON
+      let finalData = await response.json();
+      return finalData;
     } catch (error) {
-        throw new Error('Failed to fetch currency data');
+      // Log the error and rethrow it for handling in the calling function
+      console.error('Failed to fetch currency data:', error);
+      throw error;
     }
-}
-
-// Function to convert user-selected currencies to lowercase
-function convertToLowerCase(currency) {
+  }
+  
+  // Function to convert currencies to lowercase
+  function convertToLowerCase(currency) {
     return currency.toLowerCase();
-}
-
-document.getElementById("currency-form").addEventListener("submit", async function(event) {
+  }
+  
+  // Event listener for the currency conversion form submission
+    document.getElementById("currency-form").addEventListener("submit", async function(event) {
     event.preventDefault();
     const sendAmount = parseFloat(document.getElementById("send-amount").value);
-    // Convert user-selected currencies to lowercase
     const sendCurrency = convertToLowerCase(document.getElementById("send-currency").value);
     const receiveCurrency = convertToLowerCase(document.getElementById("receive-currency").value);
-
+  
     try {
-        const data = await fetchCurrencyData(sendCurrency);
-
-        // Check if receiveCurrency exists in the response
-        if (receiveCurrency in data) {
-            // Extract conversion rate for the receive currency
-            const receiveCurrencyRate = data[receiveCurrency];
-            console.log('Receive Currency Rate:', receiveCurrencyRate);
-
-            // Calculate the received amount
-            const receivedAmount = sendAmount * receiveCurrencyRate;
-
-            // Log receivedAmount to console
-            console.log('Received Amount:', receivedAmount);
-
-            // Display the result in the receive-amount input
-            document.getElementById("result").value = receivedAmount.toFixed(2);
-        } else {
-            throw new Error('Receive currency not found in response');
-        }
-
+      const data = await fetchCurrencyData(sendCurrency);
+  
+      // Access the conversion rate for the receive currency directly
+      const receiveCurrencyRate = (data[sendCurrency][receiveCurrency]);
+  
+      // Validate the conversion rate
+      if (typeof receiveCurrencyRate !== 'number' || isNaN(receiveCurrencyRate)) {
+        throw new Error('Invalid conversion rate');
+      }
+  
+      // Perform the currency conversion
+      const receivedAmount = sendAmount * receiveCurrencyRate;
+  
+      // Update the result in the 'result' input field
+      document.getElementById("result").value = receivedAmount.toFixed(2);
     } catch (error) {
-        console.error(error);
-        // Handle the error
-        alert("Failed to perform currency conversion. Please try again later.");
+      alert("Failed to perform currency conversion. Please try again later.");
     }
-});
+  });
+  
