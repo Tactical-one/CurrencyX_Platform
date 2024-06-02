@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .invoice-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 20px;
+            position: relative;
+        }
+        .invoice-header img {
+            height: 50px;
+        }
+        .barcode {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 60px;
+            margin: 10px;
+        }
+        .invoice-details {
+            margin: 20px 0;
+        }
+        .invoice-details div {
+            margin-bottom: 10px;
+        }
+        .invoice-details h2 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        .invoice-details p {
+            margin: 0;
+            color: #777;
+        }
+        .invoice-items {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .invoice-items th, .invoice-items td {
+            border: 1px solid #eee;
+            padding: 10px;
+            text-align: left;
+        }
+        .invoice-items th {
+            background-color: #f5f5f5;
+        }
+        .invoice-summary {
+            margin-top: 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .invoice-summary table {
+            width: 50%;
+            border-collapse: collapse;
+        }
+        .invoice-summary th, .invoice-summary td {
+            border: 1px solid #eee;
+            padding: 10px;
+            text-align: left;
+        }
+        .invoice-summary th {
+            background-color: #f5f5f5;
+        }
+        .invoice-footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #777;
+        }
+        .buttons-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .buttons-container button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .print-button {
+            background-color: #4caf50;
+            color: white;
+        }
+        .download-button {
+            background-color: #2196f3;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="buttons-container">
+        <button class="print-button" onclick="printInvoice()">Print Invoice</button>
+        <button class="download-button" onclick="downloadInvoice()">Download Invoice</button>
+    </div>
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <img src="logo.png" alt="Company Logo">
+            <img src="barcode.png" alt="Barcode" class="barcode">
+            <div class="invoice-details">
+                <h2>Invoice</h2>
+                <p>Invoice Number: 001</p>
+                <p>Date: June 1, 2024</p>
+            </div>
+        </div>
+        <div class="invoice-details">
+            <div>
+                <strong>From:</strong>
+                <p>Company Name<br>123 Street Name<br>City, State, ZIP Code<br>Email: company@example.com</p>
+            </div>
+            <div>
+                <strong>To:</strong>
+                <p>Client Name<br>456 Another St<br>City, State, ZIP Code<br>Email: client@example.com</p>
+            </div>
+        </div>
+        <table class="invoice-items">
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Item 1</td>
+                    <td>2</td>
+                    <td>$50.00</td>
+                    <td>$100.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="invoice-summary">
+            <table>
+                <tr>
+                    <th>Subtotal</th>
+                    <td>$290.00</td>
+                </tr>
+                <tr>
+                    <th>Tax (10%)</th>
+                    <td>$29.00</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <td>$319.00</td>
+                </tr>
+            </table>
+        </div>
+        <div class="invoice-footer">
+            <p>Thank you for your business!</p>
+        </div>
+    </div>
+
+    <script>
+        function printInvoice() {
+            window.print();
+        }
+
+        function downloadInvoice() {
+            const element = document.createElement('a');
+            const file = new Blob([document.documentElement.outerHTML], { type: 'text/html' });
+            element.href = URL.createObjectURL(file);
+            element.download = 'invoice.html';
+            document.body.appendChild(element); // Required for this to work in FireFox
+            element.click();
+        }
+    </script>
+</body>
+</html>
