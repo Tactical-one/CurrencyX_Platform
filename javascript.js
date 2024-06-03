@@ -63,7 +63,7 @@ async function fetchCurrencyData(sendCurrency) {
         alert('Payment processed successfully!');
         $('#paymentModal').modal('hide');
         setTimeout(function() {
-            window.location.href = 'success-page.html'; // Redirect to your desired page
+            window.location.href = 'invoice.html'; // Redirect to your desired page
         }, 1000); // Adjust the timeout as needed
     } else {
         form.reportValidity();
