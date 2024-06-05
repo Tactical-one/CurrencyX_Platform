@@ -1,3 +1,30 @@
+document.addEventListener("DOMContentLoaded", function() {
+  function fetchIPInfo() {
+    // Make a GET request to the API
+    fetch('https://api.myip.com')
+        .then(response => response.json())
+        .then(data => {
+            // Find the divs for IP info and set their text content
+            document.getElementById("ip-address").textContent = `IP: ${data.ip}`;
+            document.getElementById("country").textContent = `Country: ${data.country}`;
+            document.getElementById("country-code").textContent = `Country Code: ${data.cc}`;
+        })
+        .catch(error => {
+            console.error('Error fetching IP info:', error);
+        });
+}
+
+// Call the functions to display the random number, current date, and IP info when the DOM is fully loaded
+fetchIPInfo();
+});
+
+
+
+
+
+
+
+
 /**
  * Fetches currency data from the API
  * @param {string} sendCurrency - The currency to fetch data for

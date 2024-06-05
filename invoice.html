@@ -35,8 +35,8 @@
             <img src="/img/barcode-illustration-isolated_23-2150584094.avif" alt="Barcode" class="barcode">
             <div class="invoice-details">
                 <h2>Invoice</h2>
-                <p>Invoice Number: 001</p>
-                <p>Date: June 1, 2024</p>
+                <p>Invoice Number: <div id="random-number-container"></div></p>
+                <p>Date: <div id="date-container"></div></p>
             </div>
         </div>
         <div class="invoice-details">
@@ -115,7 +115,7 @@
             document.getElementById('myModal').style.display = 'block';
         }
 
-        function closeModal() {
+        function closeModal() {         // This function closes the modal by setting its display property to 'none'
             document.getElementById('myModal').style.display = 'none';
         }
 
@@ -126,6 +126,45 @@
                 modal.style.display = 'none';
             }
         };
+
+
+
+    document.addEventListener("DOMContentLoaded", function() {
+    function generateRandomWithPrefix(prefix) {
+        // Generate a random number between 100000 and 999999 for a 6-digit random number
+        const randomNumber = Math.floor(Math.random() * 900000) + 100000;
+        // Concatenate the prefix with the random number
+        return prefix + randomNumber;
+    }
+
+    function displayRandomNumber() {
+        // Get the random number with the prefix
+        const randomString = generateRandomWithPrefix("T");
+        // Find the div with the ID "random-number-container" and set its text content
+        document.getElementById("random-number-container").textContent = randomString;
+    }
+
+    function getCurrentDate() {
+        // Create a new Date object
+        const date = new Date();
+        // Get the current date in the format YYYY-MM-DD
+        const formattedDate = date.toISOString().split('T')[0];
+        return formattedDate;
+    }
+
+    function displayCurrentDate() {
+        // Get the current date
+        const currentDate = getCurrentDate();
+        // Find the div with the ID "date-container" and set its text content
+        document.getElementById("date-container").textContent = currentDate;
+    }
+
+    // Call the functions to display the random number and current date when the DOM is fully loaded
+    displayRandomNumber();
+    displayCurrentDate();
+});
+
+
     </script>
 </body>
 </html>
