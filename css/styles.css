@@ -2,7 +2,7 @@ body{padding-top:20px;}
 
 
 @media only screen and (min-width: 768px){
-body:not(.layout-admin) .section, body:not(.layout-admin) section {
+body:not(.layout-admin) .section {
     padding: 100px 0;
 }
 }
@@ -108,8 +108,8 @@ opacity-8, .overlay-opacity-8:after {
 
 .counter {
     background: #100028;
-    height: 550px;
-    padding-top: 380px;
+    height: 650px;
+    padding-top: 90px;
     overflow: hidden;
   }
   
