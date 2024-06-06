@@ -1,28 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
-  function fetchIPInfo() {
-    // Make a GET request to the API
-    fetch('https://api.myip.com')
-        .then(response => response.json())
-        .then(data => {
-            // Find the divs for IP info and set their text content
-            document.getElementById("ip-address").textContent = `IP: ${data.ip}`;
-            document.getElementById("country").textContent = `Country: ${data.country}`;
-            document.getElementById("country-code").textContent = `Country Code: ${data.cc}`;
-        })
-        .catch(error => {
-            console.error('Error fetching IP info:', error);
-        });
-}
+ // see http://ip-api.com/docs/api:json for documentation
 
-// Call the functions to display the random number, current date, and IP info when the DOM is fully loaded
-fetchIPInfo();
+// API to Get country and country code
+var endpoint = 'http://ip-api.com/json/?fields=status,message,country,countryCode';
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+	if (this.readyState == 4 && this.status == 200) {
+		var response = JSON.parse(this.responseText);
+		if(response.status !== 'success') {
+			console.log('query failed: ' + response.message);
+			return
+		}
+		// Redirect
+		// Display country and country code in HTML
+    document.getElementById('country').innerText = response.country;
+    document.getElementById('cc').innerText = response.countryCode;
+	}
+};
+xhr.open('GET', endpoint, true);
+xhr.send();
 });
-
-
-
-
-
-
 
 
 /**
