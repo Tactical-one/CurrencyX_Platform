@@ -42,18 +42,18 @@
         <div class="invoice-details">
             <div>
                 <strong>From:</strong>
-                <p>CurrencyX<br>123 Street Name<br>City, State, ZIP Code</p>
+                <p>CurrencyX<br><!--123 Street Name<br>City, State, ZIP Code--></p>
             </div>
             <div>
                 <strong>To:</strong>
-                <p>Client Name<br>456 Another St<br>City, State, ZIP Code<br>Email: client@example.com</p>
+                <p>Client Name<br>456 Another St<br><span id="country"></span><br><!-- Email: client@example.com --></p>
             </div>
         </div>
         <table class="invoice-items">
             <thead>
                 <tr>
                     <th>Description</th>
-                    <th>Quantity</th>
+                    <th>Rate</th>
                     <th>Unit Price</th>
                     <th>Total</th>
                 </tr>
@@ -61,7 +61,7 @@
             <tbody>
                 <tr>
                     <td>Item 1</td>
-                    <td>2</td>
+                    <td>1</td>
                     <td>$50.00</td>
                     <td>$100.00</td>
                 </tr>
@@ -96,6 +96,8 @@
             </div>
         </div>
     </div>
+
+    <script src="javascript.js"></script>
 
     <script>
         function printInvoice() {

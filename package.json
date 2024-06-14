@@ -1,0 +1,17 @@
+{
+  "name": "currencyx_platform",
+  "version": "1.0.0",
+  "description": "A currency exchange webapp",
+  "main": "javascript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.3",
+    "path": "^0.12.7"
+  }
+}
