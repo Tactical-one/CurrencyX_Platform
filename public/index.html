@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 <nav class="navbar navbar-expand-lg bg-white navbar-light p-0">
-                    <a href="index.html" class="navbar-brand d-block d-lg-none">
+                    <a href="/home" class="navbar-brand d-block d-lg-none">
                         <h1 class="m-0 display-4 text-primary text-uppercase">CurrencyX</h1>
                     </a>
                     <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
@@ -67,7 +67,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="/home" class="nav-item nav-link active">Home</a>
                             <a href="#" class="nav-item nav-link">About</a>
                             <a href="#" class="nav-item nav-link">Services</a>
                             <a href="#" class="nav-item nav-link">Contact Us</a>
@@ -105,15 +105,15 @@
                         <div class="exchange-container">
                             <div class="exchange-header">
                                 <div class="exchange-tab active">Exchange</div>
-                                <div class="exchange-tab">Buy Crypto <i class="fas fa-flag"></i></div>
+                                <div class="exchange-tab">Buy Crypto <i class="fab fa-bitcoin"></i></div>
                             </div>
-                            <form id="currency-form">
+                            <form id="currency-form" action="/form-submit" method="POST">
                             <div class="exchange-body">
                                 <div class="exchange-input">
                                     <label for="send-amount">You Send</label>
                                     <div class="input-container">
-                                        <input type="number" id="send-amount" placeholder="0.00" required>
-                                        <select id="send-currency">
+                                        <input type="number" id="send-amount" name="send_amount" placeholder="Enter an amount" required>
+                                        <select id="send-currency" name="send_currency">
                                             <option value="AED" title="United Arab Emirates Dirham">AED</option>
                                             <option value="AFN" title="Afghan Afghani">AFN</option>
                                             <option value="ALL" title="Albanian Lek">ALL</option>
@@ -293,8 +293,8 @@
                                 <div class="exchange-output">
                                     <label for="receive-amount">You Get</label>
                                     <div class="input-container">
-                                        <input type="number" id="result" placeholder="Received Amount">
-                                        <select id="receive-currency">
+                                        <input type="number" id="result" name="result" placeholder="Received Amount">
+                                        <select id="receive-currency" name="receive_currency">
                                             <option value="AED" title="United Arab Emirates Dirham">AED</option>
                                             <option value="AFN" title="Afghan Afghani">AFN</option>
                                             <option value="ALL" title="Albanian Lek">ALL</option>
@@ -468,9 +468,9 @@
                                         <i class="fas fa-lock"></i>
                                     </div>
                                 </div>
-                                <button type="submit" class="exchange-button" id="exchange-button">Exchange</button>
+                                <button type="button" class="exchange-button" id="exchange-button">Exchange</button>
                                 <p></p>
-                                <button type="button" class="exchange-button" data-bs-toggle="modal" data-bs-target="#paymentModal">Pay</button>
+                                <button type="submit" class="exchange-button" data-bs-toggle="modal" data-bs-target="#paymentModal">Pay</button>
                             </div>
                             </form>
                         </div>
@@ -493,7 +493,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="card-reflective">
-                        <form id="paymentForm">
+                        <form id="paymentForm" action="/form-submit2" method="POST">
                             <div class="form-group">
                                 <label for="cardNumber">Card Number</label>
                                 <input type="text" class="form-control" id="cardNumber" placeholder="Enter card number">
@@ -510,7 +510,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="cardName">Name on Card</label>
-                                <input type="text" class="form-control" id="cardName" placeholder="Name on card">
+                                <input type="text" class="form-control" id="cardName" name="name" placeholder="Name on card">
                             </div>
                         </form>
                         <div class="supported-payments">
@@ -590,7 +590,7 @@
                         <h1 class="mb-4">Why Choose Us</h1>
                         <div class="d-flex mb-4">
                             <div class="btn-primary btn-lg-square px-3" style="border-radius: 50px;">
-                                <h5 class="text-secondary m-0">01</h5>
+                                <h5 class="text-secondary1 m-0">01</h5>
                             </div>
                             <div class="ml-4">
                                 <h5>Best Law Practices</h5>
@@ -599,7 +599,7 @@
                         </div>
                         <div class="d-flex mb-4">
                             <div class="btn-primary btn-lg-square px-3" style="border-radius: 50px;">
-                                <h5 class="text-secondary m-0">02</h5>
+                                <h5 class="text-secondary1 m-0">02</h5>
                             </div>
                             <div class="ml-4">
                                 <h5>Efficiency & Trust</h5>
@@ -608,7 +608,7 @@
                         </div>
                         <div class="d-flex">
                             <div class="btn-primary btn-lg-square px-3" style="border-radius: 50px;">
-                                <h5 class="text-secondary m-0">03</h5>
+                                <h5 class="text-secondary1 m-0">03</h5>
                             </div>
                             <div class="ml-4">
                                 <h5>Results You Deserve</h5>
@@ -629,7 +629,7 @@
                 <div class="row h-100 align-items-center justify-content-center">
                     <div class="col-lg-7 text-center">
                         <h1 class="text-white mb-4">Let's get started. Call us now for a Free Consultation</h1>
-                        <a class="btn btn-primary py-3 px-5 mt-2" href="#">Call Us Now</a>
+                        <a class="btn btn-primary py-3 px-5 mt-2" href="##">Call Us Now</a>
                     </div>
                 </div>
             </div>

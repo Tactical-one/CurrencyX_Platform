@@ -84,9 +84,9 @@ opacity-8, .overlay-opacity-8:after {
         }
         .btn-primary {
             border-radius: 20px;
-            background: linear-gradient(145deg, #4caf50, #81c784);
+            background: linear-gradient(145deg, #007bff, #1D1D45);
             border: none;
-            box-shadow: 5px 5px 10px #388e3c, -5px -5px 10px #a5d6a7;
+            box-shadow: 5px 5px 10px #386d8e, -5px -5px 10px #a5b5d6;
         }
         .btn-secondary {
             border-radius: 20px;
@@ -514,4 +514,9 @@ display: inline-block;
     font-family: 'Montserrat', sans-serif;
     font-weight: 600;
     color: #fff;
+}
+
+.text-secondary1 {
+    --bs-text-opacity: 1;
+    color: var(--bs-white) !important;
 }

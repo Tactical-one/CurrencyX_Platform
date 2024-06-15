@@ -86,18 +86,17 @@ async function fetchCurrencyData(sendCurrency) {
     }
   }
   
-  // Event listener for the currency conversion form submission
-    document.getElementById("currency-form").addEventListener("submit", async function(event) {
+  // Event listener for the currency conversion button
+    document.getElementById("exchange-button").addEventListener("click", async function(event) {
     event.preventDefault();
     const sendAmount = parseFloat(document.getElementById("send-amount").value);
     const sendCurrency = convertToLowerCase(document.getElementById("send-currency").value);
     const receiveCurrency = convertToLowerCase(document.getElementById("receive-currency").value);
 
-     // Function to convert currencies in dropdown to lowercase
+  // Function to convert currencies in dropdown to lowercase
   function convertToLowerCase(currency) {
     return currency.toLowerCase();
   }
-  
     try {
       const data = await fetchCurrencyData(sendCurrency);
   
@@ -115,12 +114,26 @@ async function fetchCurrencyData(sendCurrency) {
   
       // Update the result in the 'result' input field
       document.getElementById("result").value = receivedAmount.toFixed(2);
+
+    // Push the transaction to the backend (array)
+    const transactionData = {
+    send_amount: sendAmount,
+    send_currency: sendCurrency,
+    result: receivedAmount.toFixed(2),
+    receive_currency: receiveCurrency
+};
+    const response = await fetch('/form-submit', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+  },
+    body: JSON.stringify(transactionData)
+});
     } catch (error) {
-      alert("Failed to perform currency conversion. Please try again later.");
+      console.error('Error:', error);
     }
   });
-
-
+  
   
   //The modal function
   document.getElementById('payButton').addEventListener('click', function() {
