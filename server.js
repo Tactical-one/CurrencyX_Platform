@@ -25,23 +25,18 @@ app.listen(port, () => {
 
 
 let transactions = []  //array to store transactions
-let users = [] //array to store users
 
 app.post('/form-submit', (req, res) => {
     //Take what was sent from the req.body and send into the route
     const {send_amount, send_currency, result, receive_currency} = req.body
     const newTransaction = {id: transactions.length + 1, send_amount, send_currency, result, receive_currency}
     transactions.push(newTransaction) // adds new transaction to the array
-    })
+    })   
 
-   // Endpoint to get transactions in descending order 
+   // Endpoint to get all transactions in descending order 
 app.get('/transactions', (req, res) => {
     const sortedTransactions = [...transactions].sort((a, b) => b.id - a.id);
     res.json(sortedTransactions) // returns the transaction array
 })
 
-//update transaction
-app.put('/transactions/:id', (req, res) => {
-    
-})
 

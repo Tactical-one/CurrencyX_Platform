@@ -493,24 +493,24 @@
                 </div>
                 <div class="modal-body">
                     <div class="card-reflective">
-                        <form id="paymentForm" action="/form-submit2" method="POST">
+                        <form id="paymentForm">
                             <div class="form-group">
                                 <label for="cardNumber">Card Number</label>
-                                <input type="text" class="form-control" id="cardNumber" placeholder="Enter card number">
+                                <input type="text" class="form-control" id="cardNumber" name="cardNumber" placeholder="Enter card number">
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="expiryDate">Expiry Date</label>
-                                    <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
+                                    <input type="text" class="form-control" id="expiryDate" name="expiryDate" placeholder="MM/YY">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="cvv">CVV</label>
-                                    <input type="text" class="form-control" id="cvv" placeholder="CVV">
+                                    <input type="text" class="form-control" id="cvv" name="cvv" placeholder="CVV">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="cardName">Name on Card</label>
-                                <input type="text" class="form-control" id="cardName" name="name" placeholder="Name on card">
+                                <input type="text" class="form-control" id="cardName" name="cardName" placeholder="Name on card">
                             </div>
                         </form>
                         <div class="supported-payments">

@@ -46,7 +46,7 @@
             </div>
             <div>
                 <strong>To:</strong>
-                <p>Client Name<br>456 Another St<br><span id="country"></span><br><!-- Email: client@example.com --></p>
+                <p>User<br>456 Another St<br><span id="country"></span><br><!-- Email: client@example.com --></p>
             </div>
         </div>
         <table class="invoice-items">
@@ -54,16 +54,16 @@
                 <tr>
                     <th>Description</th>
                     <th>Rate</th>
-                    <th>Unit Price</th>
+                    <th>Amount</th>
                     <th>Total</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Item 1</td>
+                    <td><span id="send_currency"></span> ~ <span id="receive_currency"></span></td>
                     <td>1</td>
-                    <td>$50.00</td>
-                    <td>$100.00</td>
+                    <td><span id="send_amount"></span></td>
+                    <td><span id="result"></span></td>
                 </tr>
             </tbody>
         </table>
@@ -71,15 +71,15 @@
             <table>
                 <tr>
                     <th>Subtotal</th>
-                    <td>$290.00</td>
+                    <td><span id="result1"></span></td>
                 </tr>
                 <tr>
-                    <th>Tax (10%)</th>
-                    <td>$29.00</td>
+                    <th>Tax (0%)</th>
+                    <td>0.00</td>
                 </tr>
                 <tr>
                     <th>Total</th>
-                    <td>$319.00</td>
+                    <td><span id="result2"></span></td>
                 </tr>
             </table>
         </div>
@@ -164,6 +164,39 @@
     // Call the functions to display the random number and current date when the DOM is fully loaded
     displayRandomNumber();
     displayCurrentDate();
+
+    // Function to fetch data from the API and populate the DOM
+    async function datagenerate() {
+            try {
+                // Fetch data from the API
+                const response = await fetch('http://localhost:8080/transactions/');
+                
+                // Check if the response is ok (status in the range 200-299)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+
+                // Parse the response as JSON
+                const data = await response.json();
+
+                // Get the first object from the array
+                const firstObject = data[0];
+
+                // Set the content of specific HTML elements to display each key's value
+                document.getElementById('send_amount').textContent = firstObject.send_amount;
+                document.getElementById('send_currency').textContent = firstObject.send_currency;
+                document.getElementById('result').textContent = firstObject.result;
+                document.getElementById('result1').textContent = firstObject.result;
+                document.getElementById('result2').textContent = firstObject.result;
+                document.getElementById('receive_currency').textContent = firstObject.receive_currency;
+            } catch (error) {
+                console.error('There has been a problem with your fetch operation:', error);
+            }
+        }
+
+        // Call the function to display the keys and values
+        datagenerate();
+
 });
 
 

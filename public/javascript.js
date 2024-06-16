@@ -115,7 +115,7 @@ async function fetchCurrencyData(sendCurrency) {
       // Update the result in the 'result' input field
       document.getElementById("result").value = receivedAmount.toFixed(2);
 
-    // Push the transaction to the backend (array)
+    // Push the transaction to the array (database)
     const transactionData = {
     send_amount: sendAmount,
     send_currency: sendCurrency,
@@ -134,17 +134,16 @@ async function fetchCurrencyData(sendCurrency) {
     }
   });
   
-  
-  //The modal function
-  document.getElementById('payButton').addEventListener('click', function() {
-    const form = document.getElementById('paymentForm');
-    if (form.checkValidity()) {
-        alert('Payment processed successfully!');
-        $('#paymentModal').modal('hide');
-        setTimeout(function() {
-            window.location.href = 'invoice.html'; // Redirect to your desired page
-        }, 1000); // Adjust the timeout as needed
-    } else {
-        form.reportValidity();
-    }
-});
+    //The modal function
+    document.getElementById('payButton').addEventListener('click', function() {
+      const form = document.getElementById('paymentForm');
+      if (form.checkValidity()) {
+          alert('Payment processed successfully!');
+          $('#paymentModal').modal('hide');
+          setTimeout(function() {
+              window.location.href = 'invoice.html'; // Redirect to your desired page
+          }, 1000); // Adjust the timeout as needed
+      } else {
+          form.reportValidity();
+      }
+  });
