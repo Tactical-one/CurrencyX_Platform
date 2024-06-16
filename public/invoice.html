@@ -141,7 +141,7 @@
 
     function displayRandomNumber() {
         // Get the random number with the prefix
-        const randomString = generateRandomWithPrefix("T");
+        const randomString = generateRandomWithPrefix("TR");
         // Find the div with the ID "random-number-container" and set its text content
         document.getElementById("random-number-container").textContent = randomString;
     }
@@ -193,13 +193,9 @@
                 console.error('There has been a problem with your fetch operation:', error);
             }
         }
-
         // Call the function to display the keys and values
         datagenerate();
-
 });
-
-
     </script>
 </body>
 </html>
