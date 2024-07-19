@@ -59,80 +59,95 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 });
 
-
-
-/**
- * Fetches currency data from the API
- * @param {string} sendCurrency - The currency to fetch data for
- * @returns {Promise<object>} - The fetched currency data
- */
-async function fetchCurrencyData(sendCurrency) {
-    const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${sendCurrency}.json`;
-  
-    try {
-      // Fetch the currency data from the API
-      const response = await fetch(url);
-      if (!response.ok) {
-        // Throw an error if the response is not OK
-        throw new Error('Network response was not ok');
-      }
-      // Parse the response as JSON
-      let finalData = await response.json();
-      return finalData;
-    } catch (error) {
-      // Log the error and rethrow it for handling in the calling function
-      console.error('Failed to fetch currency data:', error);
-      throw error;
-    }
-  }
   
   // Event listener for the currency conversion button
-    document.getElementById("exchange-button").addEventListener("click", async function(event) {
+  document.getElementById("exchange-button").addEventListener("click", async function(event) {
     event.preventDefault();
-    const sendAmount = parseFloat(document.getElementById("send-amount").value);
-    const sendCurrency = convertToLowerCase(document.getElementById("send-currency").value);
-    const receiveCurrency = convertToLowerCase(document.getElementById("receive-currency").value);
 
-  // Function to convert currencies in dropdown to lowercase
-  function convertToLowerCase(currency) {
-    return currency.toLowerCase();
-  }
-    try {
-      const data = await fetchCurrencyData(sendCurrency);
-  
-      // Access the conversion rate for the receive currency directly
-      const receiveCurrencyRate = (data[sendCurrency][receiveCurrency]);
-      document.getElementById("rate").innerText = receiveCurrencyRate;
-  
-      // Validate the conversion rate
-      if (typeof receiveCurrencyRate !== 'number' || isNaN(receiveCurrencyRate)) {
-        throw new Error('Invalid conversion rate');
-      }
-  
-      // Perform the currency conversion
-      const receivedAmount = sendAmount * receiveCurrencyRate;
-  
-      // Update the result in the 'result' input field
-      document.getElementById("result").value = receivedAmount.toFixed(2);
+    const sendAmountInput = document.getElementById("send-amount");
+    const sendCurrencyInput = document.getElementById("send-currency");
+    const receiveCurrencyInput = document.getElementById("receive-currency");
 
-    // Push the transaction to the array (database)
-    const transactionData = {
-    send_amount: sendAmount,
-    send_currency: sendCurrency,
-    result: receivedAmount.toFixed(2),
-    receive_currency: receiveCurrency
-};
-    const response = await fetch('/form-submit', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-  },
-    body: JSON.stringify(transactionData)
-});
-    } catch (error) {
-      console.error('Error:', error);
+    const sendAmount = parseFloat(sendAmountInput.value);
+    const sendCurrency = convertToLowerCase(sendCurrencyInput.value);
+    const receiveCurrency = convertToLowerCase(receiveCurrencyInput.value);
+
+    // Check if any input fields are empty and notify the user
+    if (isEmpty(sendAmountInput)) {
+        alert("Please fill in a Send Amount.");
+        return;
     }
-  });
+
+    try {
+        const data = await fetchCurrencyData(sendCurrency);
+
+        // Access the conversion rate for the receive currency directly
+        const receiveCurrencyRate = (data[sendCurrency][receiveCurrency]);
+        document.getElementById("rate").innerText = receiveCurrencyRate;
+
+        // Validate the conversion rate
+        if (typeof receiveCurrencyRate !== 'number' || isNaN(receiveCurrencyRate)) {
+            throw new Error('Invalid conversion rate');
+        }
+
+        // Perform the currency conversion
+        const receivedAmount = sendAmount * receiveCurrencyRate;
+
+        // Update the result in the 'result' input field
+        document.getElementById("result").value = receivedAmount.toFixed(2);
+
+        // Push the transaction to the array (database)
+        const transactionData = {
+            send_amount: sendAmount,
+            send_currency: sendCurrency,
+            result: receivedAmount.toFixed(2),
+            receive_currency: receiveCurrency
+        };
+        
+        const response = await fetch('/form-submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(transactionData)
+        });
+    } catch (error) {
+        console.error('Error:', error);
+    }
+});
+
+// Function to check if an input field is empty
+function isEmpty(inputElement) {
+    return inputElement.value.trim() === "";
+}
+
+// Function to convert currencies in dropdown to lowercase
+function convertToLowerCase(currency) {
+    return currency.toLowerCase();
+}
+
+
+// Functon to fetch currency data from the API
+async function fetchCurrencyData(sendCurrency) {
+  const url = `https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${sendCurrency}.json`;
+
+  try {
+    // Fetch the currency data from the API
+    const response = await fetch(url);
+    if (!response.ok) {
+      // Throw an error if the response is not OK
+      throw new Error('Network response was not ok');
+    }
+    // Parse the response as JSON
+    let finalData = await response.json();
+    return finalData;
+  } catch (error) {
+    // Log the error and rethrow it for handling in the calling function
+    console.error('Failed to fetch currency data:', error);
+    throw error;
+  }
+}
+
   
     //The modal function
     document.getElementById('payButton').addEventListener('click', function() {
@@ -142,7 +157,7 @@ async function fetchCurrencyData(sendCurrency) {
           $('#paymentModal').modal('hide');
           setTimeout(function() {
               window.location.href = 'invoice.html'; // Redirect to your desired page
-          }, 1000); // Adjust the timeout as needed
+          }, 2000); // Adjust the timeout as needed
       } else {
           form.reportValidity();
       }
