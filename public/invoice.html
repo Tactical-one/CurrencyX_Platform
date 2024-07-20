@@ -130,7 +130,6 @@
         };
 
 
-
     document.addEventListener("DOMContentLoaded", function() {
     function generateRandomWithPrefix(prefix) {
         // Generate a random number between 100000 and 999999 for a 6-digit random number
@@ -165,11 +164,11 @@
     displayRandomNumber();
     displayCurrentDate();
 
-    // Function to fetch data from the API and populate the DOM
-    async function datagenerate() {
+     // Function to fetch data from the API and populate the DOM
+     async function datagenerate() {
             try {
-                // Fetch data from the API
-                const response = await fetch('http://localhost:8080/transactions/');
+                // Fetch data from the /transactions endpoint
+                const response = await fetch('/transactions');
                 
                 // Check if the response is ok (status in the range 200-299)
                 if (!response.ok) {
@@ -195,7 +194,8 @@
         }
         // Call the function to display the keys and values
         datagenerate();
-});
+    });
+    
     </script>
 </body>
 </html>

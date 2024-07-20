@@ -1,9 +1,9 @@
 const express = require('express')
 const path = require('path')
 const app = express()
-const bodyParser = require('body-parser')
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt');
+const bodyParser = require('body-parser') // for parsing data 
+const mongoose = require('mongoose') // for mongodb
+const bcrypt = require('bcrypt'); // for password hashing
 const port = 8080
 
 // middleware helper functions within express
@@ -11,12 +11,14 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
+app.locals.titles = "CURRENCYX" //title of the website
+
 // connect to mongodb
 mongoose.connect('mongodb+srv://n01590640:vcdlcch7IzbL6zpY@cluster0.zpfjqyv.mongodb.net/project_currencyx?retryWrites=true&w=majority');
 
 let Schema = mongoose.Schema;
 
-// Create a schema
+// Create a user schema
 const userSchema = new mongoose.Schema({
     username: String,
     email: String,
@@ -87,7 +89,46 @@ app.post('/login', async (req, res) => {
 });
 
 
-app.locals.titles = "CURRENCYX"
+// create a transaction schema
+const transactionSchema = new mongoose.Schema({
+    send_amount: Number,
+    send_currency: String,
+    result: Number,
+    receive_currency: String
+});
+
+const Transaction = mongoose.model('transactions', transactionSchema);
+
+// route to create a new transaction
+app.post('/form-submit', async (req, res) => {
+    // Take what was sent from the req.body and send into the route
+    const { send_amount, send_currency, result, receive_currency } = req.body;
+    
+    try {
+        // Create a new transaction instance
+        const newTransaction = new Transaction({ send_amount, send_currency, result, receive_currency });
+        
+        // Save the new transaction to the database
+        await newTransaction.save();
+        
+        res.status(201).send('Transaction saved successfully');
+    } catch (error) {
+        res.status(500).send('Error saving transaction. Please try again.');
+    }
+});
+
+
+// Endpoint to get all transactions in descending order
+app.get('/transactions', async (req, res) => {
+    try {
+        // Fetch all transactions from the database and sort them in descending order by _id
+        const sortedTransactions = await Transaction.find().sort({ _id: -1 });
+        res.json(sortedTransactions); // returns the sorted transaction array
+    } catch (error) {
+        res.status(500).send('Error fetching transactions. Please try again.');
+    }
+});
+
 
 // route to serve index.html
 app.get('/', (req, res) => {
@@ -108,19 +149,3 @@ app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`)
 })
 
-
-
-let transactions = []  //array to store transactions
-
-app.post('/form-submit', (req, res) => {
-    //Take what was sent from the req.body and send into the route
-    const {send_amount, send_currency, result, receive_currency} = req.body
-    const newTransaction = {id: transactions.length + 1, send_amount, send_currency, result, receive_currency}
-    transactions.push(newTransaction) // adds new transaction to the array
-    })   
-
-   // Endpoint to get all transactions in descending order 
-app.get('/transactions', (req, res) => {
-    const sortedTransactions = [...transactions].sort((a, b) => b.id - a.id);
-    res.json(sortedTransactions) // returns the transaction array
-})
