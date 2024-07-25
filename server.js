@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session') // for sessions
 const path = require('path')
 const app = express()
 const bodyParser = require('body-parser') // for parsing data 
@@ -6,10 +7,19 @@ const mongoose = require('mongoose') // for mongodb
 const bcrypt = require('bcrypt'); // for password hashing
 const port = 8080
 
+// Load environment variables
+require('dotenv').config({ path: 'secret.env' });
+
 // middleware helper functions within express
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
+app.use(session({
+    secret: process.env.SESSION_SECRET, // uses the secret key from the environment variable
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // set to true if using HTTPS
+}))
 
 app.locals.titles = "CURRENCYX" //title of the website
 
@@ -41,6 +51,9 @@ app.post('/signup', async (req, res) => {
         
         // Save the new user to the database
         await newUser.save();
+
+        // Store user information in the session
+        req.session.user = newUser;
         
         // Send a response to the client to show an alert and redirect after 3 seconds
         res.send(`
@@ -55,6 +68,7 @@ app.post('/signup', async (req, res) => {
         res.status(500).send('Error signing up. Please try again.');
     }
 });
+
 
 // route to login
 app.post('/login', async (req, res) => {
@@ -73,6 +87,9 @@ app.post('/login', async (req, res) => {
         if (!isMatch) {
             return res.status(401).send('Invalid email or password');
         }
+
+        // Store user information in the session
+        req.session.user = user;
 
         // Send a response to the client to show an alert and redirect after 3 seconds  
         res.send(`
@@ -144,6 +161,14 @@ app.get('/home', (req, res) => {
 app.get('/signup', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'signup.html'))
 })
+
+// route to serve dashboard.html
+app.get('/dashboard', (req, res) => {
+    // if (!req.session.user) {
+   //     return res.redirect('/signup'); // redirect to signup if user is not logged in
+   //  }
+    res.sendFile(path.join(__dirname, 'public', 'dashboard.html'), { user: req.session.user });
+});
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`)
